@@ -1,0 +1,65 @@
+////bus table
+
+
+create table bus(bid int(10) primary key,btype varchar(10) not null,source varchar(20) not null,destination varchar(20) not null,capacity int(10) not null,fare int(10));
+
+
+
+insert into bus
+-----------
+
+insert into bus values(101,'normal','medchal','secunderabad',30,50),(102,'normal','secunderabad','hyderabad',30,60),(103,'deluxe','medchal','secunderabad',40,70),(104,'deluxe','secunderabad','hyderabad',40,80);
+
+
+///costticket table
+
+
+create table costticket(bid int,source varchar(20),destination varchar(20),cost int(10),bustype varchar(10),foreign key fk_b(bid) references bus(bid) on update cascade on delete restrict );
+
+
+
+insert into costticket
+--------------------
+ insert into costticket values(101,'medchal','bowenpally',25,'normal');
+insert into costticket values(101,'bowenpally','secunderabad',25,'normal')
+insert into costticket values(102,'secunderabad','koti',25,'normal')
+insert into costticket values(102,'koti','hyderabad',30,'normal')
+
+
+insert into costticket values(103,'medchal','bowenpally',30,'deluxe'),(103,'bowenpally','secunderabad',40,'deluxe'),(104,'secunderabad','koti',40,'deluxe'),(104,'koti','hyderabad',45,'deluxe');
+
+
+///bus journey table
+
+create table busjourney(jid int primary key,bid int,date date,capacity int,available_seats int,cost int,time time,foreign key fk_bj(bid) references bus(bid) on update cascade on delete restrict);
+
+
+
+insert into busjourney
+-----------------------
+
+insert into busjourney values(11,101,'2019-07-31',40,40,0,"9:00:00"),(22,102,'2019-07-31',30,30,0,"10:00:00"),(33,103,'2019-07-31',40,40,0,"11:00:00"),(44,104,'2019-07-31',40,40,0,"9:00:00"),(12,101,'2019-07-01',40,40,0,"12:00:00"),(23,102,'2019-07-01',30,30,0,"1:00:00"),(34,103,'2019-07-01',40,40,0,"11:00:00"),(45,104,'2019-07-01',40,40,0,"12:00:00");
+
+
+
+
+///reservation table
+
+
+create table reservation(pnr int primary key,jid int,bid int,name varchar(20),idproof varchar(20),noOfSeats int,source varchar(20),destination varchar(20),date date,time time,bustype varchar(10),foreign key fk_r(jid) references busjourney(jid) on update cascade on delete restrict,foreign key fk_r1(bid) references bus(bid) on update cascade on delete restrict);
+
+
+///login table
+
+create table login(username varchar(10),password varchar(20));
+
+
+//insert into login
+
+
+insert into login values("admin","admin123");
+
+
+
+
+
